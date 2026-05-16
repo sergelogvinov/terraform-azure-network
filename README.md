@@ -19,6 +19,7 @@ module "network" {
   allowlist_datacenters = ["2600:1900::/28"]
   allowlist_admins      = ["1.2.3.4/32"]
 }
+```
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
