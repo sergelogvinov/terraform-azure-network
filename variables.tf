@@ -107,7 +107,7 @@ variable "capabilities" {
     "uksouth" = {
       network_nat_enable  = false
       network_peer_enable = false
-      network_peer_type   = "d2-2"
+      network_peer_type   = "Standard_B1s"
       network_peer_sku    = "Standard"
     },
   }

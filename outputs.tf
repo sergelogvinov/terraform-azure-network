@@ -17,9 +17,10 @@ output "resource_group" {
 output "networks" {
   description = "Regional networks"
   value = merge({ for idx, zone in var.regions : zone => {
-    cidr_v4 = local.network_subnet_v4[zone]
-    cidr_v6 = local.network_subnet_v6[zone]
-    # peering = try(azurerm_linux_virtual_machine.router[region].private_ip_addresses, [])
+    cidr_v4  = local.network_subnet_v4[zone]
+    cidr_v6  = local.network_subnet_v6[zone]
+    peer_v4  = try(azurerm_public_ip.router_v4[zone].ip_address, "")
+    peer_v6  = try(azurerm_public_ip.router_v6[zone].ip_address, "")
     peer_mtu = 1420
     } },
     {

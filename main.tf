@@ -144,7 +144,7 @@ resource "azurerm_route_table" "controlplane" {
     }
   }
   dynamic "route" {
-    for_each = try(var.capabilities[each.key].network_gw_enable, false) ? range(0, length(var.network_cidr)) : []
+    for_each = lookup(try(var.capabilities[each.key], {}), "network_peer_enable", false) ? range(0, length(var.network_cidr)) : []
 
     content {
       name                   = "${var.network_name}-${each.key}-route-v${length(split(".", var.network_cidr[route.value])) > 1 ? "4" : "6"}"
@@ -154,7 +154,7 @@ resource "azurerm_route_table" "controlplane" {
     }
   }
   # dynamic "route" {
-  #   for_each = try(var.capabilities[each.key].network_gw_enable, false) && try(var.capabilities[each.key].network_lb_sku, "Basic") == "Basic" ? [for ip in azurerm_network_interface.router[each.key].private_ip_addresses : ip if length(split(".", ip)) == 1] : []
+  #   for_each = lookup(try(var.capabilities[each.key], {}), "network_peer_enable", false) && try(var.capabilities[each.key].network_lb_sku, "Basic") == "Basic" ? [for ip in azurerm_network_interface.router[each.key].private_ip_addresses : ip if length(split(".", ip)) == 1] : []
 
   #   content {
   #     name                   = "${var.network_name}-${each.key}-default-v6"
