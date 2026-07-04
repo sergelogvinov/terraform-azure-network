@@ -13,7 +13,7 @@ resource "azurerm_virtual_network" "main" {
   address_space       = [local.network_subnet_v4[each.key], local.network_subnet_v6[each.key]]
   resource_group_name = var.resource_group
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_subnet" "controlplane" {
@@ -125,7 +125,7 @@ resource "azurerm_route_table" "main" {
     }
   }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_route_table" "controlplane" {
@@ -164,7 +164,7 @@ resource "azurerm_route_table" "controlplane" {
   #   }
   # }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_subnet_route_table_association" "controlplane" {

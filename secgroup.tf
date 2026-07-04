@@ -55,7 +55,7 @@ resource "azurerm_network_security_group" "common" {
       priority                   = 3190 + security_rule.key
       direction                  = "Inbound"
       access                     = "Allow"
-      protocol                   = "Icmp"
+      protocol                   = length(split(".", security_rule.value)) > 1 ? "Icmp" : "*" # "ICMPv6"
       source_port_range          = "*"
       source_address_prefixes    = length(split(".", security_rule.value)) > 1 ? [security_rule.value] : flatten([var.allowlist_datacenters, security_rule.value])
       destination_port_range     = "*"
@@ -63,7 +63,7 @@ resource "azurerm_network_security_group" "common" {
     }
   }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 ### Controlplane
@@ -150,7 +150,7 @@ resource "azurerm_network_security_group" "controlplane" {
     }
   }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 ### Web
@@ -234,7 +234,7 @@ resource "azurerm_network_security_group" "web" {
     }
   }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 ### Peering
@@ -331,5 +331,5 @@ resource "azurerm_network_security_group" "router" {
     }
   }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }

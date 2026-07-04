@@ -12,7 +12,7 @@ resource "azurerm_public_ip" "nat" {
     ignore_changes = [zones]
   }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_nat_gateway" "nat" {
@@ -24,7 +24,7 @@ resource "azurerm_nat_gateway" "nat" {
   idle_timeout_in_minutes = 30
   # zones                   = split(",", try(var.capabilities[each.key].zones, ""))
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_nat_gateway_public_ip_association" "nat" {

@@ -4,7 +4,7 @@ resource "azurerm_private_dns_zone" "main" {
   name                = var.domain
   resource_group_name = var.resource_group
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "main" {
@@ -14,5 +14,5 @@ resource "azurerm_private_dns_zone_virtual_network_link" "main" {
   private_dns_zone_name = azurerm_private_dns_zone.main[0].name
   virtual_network_id    = azurerm_virtual_network.main[each.key].id
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }

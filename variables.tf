@@ -95,7 +95,9 @@ variable "allowlist_admins" {
 variable "tags" {
   description = "Tags to set on resources"
   type        = map(string)
-  default     = {}
+  default = {
+    "Environment" = "Prod"
+  }
 }
 
 variable "capabilities" {

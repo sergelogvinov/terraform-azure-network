@@ -14,7 +14,7 @@ resource "azurerm_public_ip" "router_v4" {
   sku                 = each.value.sku
   allocation_method   = each.value.sku == "Standard" ? "Static" : "Dynamic"
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_public_ip" "router_v6" {
@@ -26,7 +26,7 @@ resource "azurerm_public_ip" "router_v6" {
   sku                 = each.value.sku
   allocation_method   = each.value.sku == "Standard" ? "Static" : "Dynamic"
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_network_interface" "router" {
@@ -51,7 +51,7 @@ resource "azurerm_network_interface" "router" {
     }
   }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 }
 
 resource "azurerm_network_interface_security_group_association" "router" {
@@ -92,7 +92,7 @@ resource "azurerm_linux_virtual_machine" "router" {
     version   = "latest"
   }
 
-  tags = merge(var.tags, { type = "infra" })
+  tags = merge(var.tags, { Service = "infra" })
 
   boot_diagnostics {}
   lifecycle {
